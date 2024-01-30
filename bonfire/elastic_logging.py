@@ -48,6 +48,7 @@ class AsyncElasticsearchHandler(logging.Handler):
         self.metadata["elapsed_sec"] = (dt.now() - self.start_time).total_seconds()
 
         log_entry = {"log": self.format(record), "metadata": self.metadata}
+        log.info(f"Telemetry enabled: {conf.ENABLE_TELEMETRY}")
         if conf.ENABLE_TELEMETRY:
             self.executor.submit(self.send_to_es, json.dumps(log_entry))
 
